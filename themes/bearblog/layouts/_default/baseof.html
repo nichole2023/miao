@@ -6,7 +6,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {{- partial "favicon.html" . -}}
-  <title>{{- block "title" . }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{- end }}</title>
+  
+
+  {{- if not .IsHome -}}
+  
+  <title>{{- block "title" . }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{- end }}</title>{{- end -}}
+
 
   {{- partial "seo_tags.html" . -}}
   <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -21,6 +26,13 @@
   Simply place a custom_head.html into
   your local /layouts/partials-directory -->
   {{- partial "custom_head.html" . -}}
+
+  {{ if .Site.Params.customCSS }}
+  {{ range .Site.Params.customCSS }}
+    <link rel="stylesheet" href="{{ . | relURL }}">
+  {{ end }}
+{{ end }}
+<link rel="stylesheet" href="/css/custom.css">
 </head>
 
 <body>
